@@ -11,8 +11,9 @@ int main() {
 	CImg<> norme0 = g[0].mul(g[0]);
 	CImg<> norme1 = g[1].mul(g[1]);
 	CImg<> norme  = norme0 + norme1;
+	norme = sqrt(norme);
 	
-	CImg<> phase0 = cos(norme0.div(norme));
+	CImg<> phase0 = cos(sqrt(norme0).div(norme));
 		
 	phase0.display("ex2_phase1");
 	norme.display("ex2_norme");
