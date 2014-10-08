@@ -75,7 +75,7 @@ CImg<float> sigmaFiltre (CImg<unsigned char> imageIn)
 	{
 		if ( norme(x,y) == 0 ) 
 		{
-			invGrad(x,y) = 120;
+			invGrad(x,y) = 255;
 		}
 		else 
 		{
