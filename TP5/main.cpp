@@ -52,9 +52,23 @@ CImg<> HornSchunck(CImg<> seq)
 CImg<> LucasKanade(CImg<> seq)
 {
  CImg<> field(seq.width(),seq.height(),1,2);
-
- cimg_forXYC(field,x,y,v)
-  field(x,y,v) = 0.01;
+ CImgList<> grad = seq.get_gradient("xyz");
+ CImg<> A(2, seq.width() * seq.height());
+ CImg<> b(1, seq.width() * seq.height());
+ 
+ // initialisation de la matrice A et du vecteur b
+ cimg_forXY(seq,x,y)
+ {
+	A(0,x + 2*y) = grad[0](x,y);
+	A(1,x + 2*y) =  grad[1](x,y);
+	b(0,x + 2*y) = -1 * grad[2](x,y);
+ };
+ 
+ CImg<> res = b.solve(A);
+ 
+ std::cout << "width = " << res.width() << std::endl;
+ std::cout << "height = " << res.height() << std::endl;
+ //field = b.solve(A);
 
  return field;
 }
